@@ -143,7 +143,8 @@ function outputResult() {
     yield END;
 }
 
-function transCharacterTest() {     var start = (new Date()).getTime()                             /*変換後*/
+function transCharacterTest() {     
+    var start = (new Date()).getTime();                             
     var g = init();
     var result = 0;
     while(!result) {
