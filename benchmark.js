@@ -1,202 +1,137 @@
-var exectime = 0;
-var xmlDoc;
-var index;
-var checkRepeat;
-var result;
+function tak(x,y,z){
+var tmp1,tmp2,tmp3,tmp4;
+if(x <= y) return z;
+tmp1 = tak(x-1,y,z);j++;
+tmp2 = tak(y-1,z,x);j++;
+tmp3 = tak(z-1,x,y);j++;
+tmp4 = tak(tmp1,tmp2,tmp3);j++;
+return tmp4;
 
-
-function primInit() {
-    index = 0;
-    checkRepeat = new Array(4);
-    result = new Array(5);
-    var nodeContent = xmlDoc.getElementsByTagName("content");
-    var nodeFirst = xmlDoc.getElementsByTagName("first");
-    var nodeSecond = xmlDoc.getElementsByTagName("second");
-    var nodeThird = xmlDoc.getElementsByTagName("third");
-    var content = document.getElementById("content");  
-    var a = document.getElementById("a");
-    var b = document.getElementById("b");
-    var c = document.getElementById("c");
-    content.innerHTML = nodeContent[0].innerHTML;
-    a.innerHTML = nodeFirst[0].innerHTML;
-    b.innerHTML = nodeSecond[0].innerHTML;
-    c.innerHTML = nodeThird[0].innerHTML; 
-}
-function primLoadNext() {
-    primrecordResult();
-    var nodeContent = xmlDoc.getElementsByTagName("content");
-    var nodeFirst = xmlDoc.getElementsByTagName("first");
-    var nodeSecond = xmlDoc.getElementsByTagName("second");
-    var nodeThird = xmlDoc.getElementsByTagName("third");
-    var content = document.getElementById("content");  
-    var a = document.getElementById("a");
-    var b = document.getElementById("b");
-    var c = document.getElementById("c");
-    content.innerHTML = nodeContent[0].innerHTML;
-    a.innerHTML = nodeFirst[0].innerHTML;
-    b.innerHTML = nodeSecond[0].innerHTML;
-    c.innerHTML = nodeThird[0].innerHTML; 
-}
-function primrecordResult() {
-    var radios = document.getElementsByName("s");
-    for(var i = 0;i < radios.length;i++) {
-        if(radios[i].checked)
-            result[index] = radios[i].value;
-    }
-    index++;
-}
-function primoutputResult() {
-    var sum = 0;
-    for(var i = 0;i < result.length;i++) {
-        if(result[i] == "a")
-        sum++;
-    }
-    var content = document.getElementById("content");
-    if(sum >= 3) 
-        content.innerHTML = "あなたの性格はいい";
-    else
-        content.innerHTML = "あなたの性格は悪い";
-}
-function getxmlDoc(url) {
-    var request = new XMLHttpRequest();
-    request.open("GET",url,false);
-    request.send();
-    return request.responseXML;
 }
 
-function oldPro() {
-    var start = (new Date()).getTime();
+var index = 0;
 
-    primInit();                                                                            
-    while(index != 5) {
-        primLoadNext();  
-    }
-    primoutputResult();
-    var end = (new Date()).getTime();
-    exectime += end - start;                                                           
-}
-
-function init() {
-    index = 0;
-    checkRepeat = new Array(4);
-    result = new Array(5);
-    var nodeContent = xmlDoc.getElementsByTagName("content");
-    var nodeFirst = xmlDoc.getElementsByTagName("first");
-    var nodeSecond = xmlDoc.getElementsByTagName("second");
-    var nodeThird = xmlDoc.getElementsByTagName("third");
-    var content = document.getElementById("content");
-    var a = document.getElementById("a");
-    var b = document.getElementById("b");
-    var c = document.getElementById("c");
-    content.innerHTML = nodeContent[0].innerHTML;
-    a.innerHTML = nodeFirst[0].innerHTML;
-    b.innerHTML = nodeSecond[0].innerHTML;
-    c.innerHTML = nodeThird[0].innerHTML;
-    yield END;
-}
-function loadNext() {
-    var g = recordResult();
-    var result = 0;
-    while(!result) {
+function Ytak(x,y,z){
+var tmp1,tmp2,tmp3,tmp4;
+if(x <= y) {yield z;}
+ var g = Ytak(x-1,y,z);
+ while(!tmp1) {
         try {
-             result = g.next();
+            tmp1 = g.next();
             yield;
-        } catch(e) {
-            
+        } catch(e) {       
         }
     }
-    var nodeContent = xmlDoc.getElementsByTagName("content");
-    var nodeFirst = xmlDoc.getElementsByTagName("first");
-    var nodeSecond = xmlDoc.getElementsByTagName("second");
-    var nodeThird = xmlDoc.getElementsByTagName("third");
-    var content = document.getElementById("content");
-    var a = document.getElementById("a");
-    var b = document.getElementById("b");
-    var c = document.getElementById("c");
-    content.innerHTML = nodeContent[0].innerHTML;
-    a.innerHTML = nodeFirst[0].innerHTML;
-    b.innerHTML = nodeSecond[0].innerHTML;
-    c.innerHTML = nodeThird[0].innerHTML;
-    yield END;
-}
-
-function recordResult() {
-    var radios = document.getElementsByName("s");
-    for(var i = 0;i < radios.length;i++) {
-        if(radios[i].checked)
-            result[index] = radios[i].value;
-    }
-    index++;
-    yield END;
-}
-function outputResult() {
-    var sum = 0;
-    for(var i = 0;i < result.length;i++) {
-        if(result[i] == "a")
-        sum++;
-    }
-    var content = document.getElementById("content");
-    if(sum >= 3) 
-        content.innerHTML = "あなたの性格はいい";
-    else
-        content.innerHTML = "あなたの性格は悪い";
-    yield END;
-}
-
-function transCharacterTest() {     var start = (new Date()).getTime()                             /*変換後*/
-    var g = init();
-    var result = 0;
-    while(!result) {
+var g = Ytak(y-1,z,x);
+ while(!tmp2) {
         try {
-            result = g.next();
+            tmp2 = g.next();
             yield;
-        } catch(e) {
-            
+        } catch(e) {       
         }
     }
-    while(index != 5) {
-        var g = loadNext();
-        var result = 0;
-        while(!result) {
-            try {
-                result = g.next();
-                yield;
-            } catch(e) {
-                
-            }
-        }
-    }
-    var g = outputResult();
-    var result = 0;
-    while(!result) {
+var g = Ytak(z-1,x,y);
+ while(!tmp3) {
         try {
-            result = g.next();
+            tmp3 = g.next();
             yield;
-        } catch(e) {
-            
+        } catch(e) {        
         }
     }
-    var end = (new Date()).getTime();
-    exectime += end - start;  
-    yield END;
-}
-function generatorPro() {
-        TaskChain.addTask(new Task(transCharacterTest()));
-        scheduler.setTaskChain(TaskChain);
-        scheduler.switchTask();
-}
-
-function averagetime(funcname) {
-    exectime = 0;
-    xmlDoc = getxmlDoc('file/question.xml');
-    var start = (new Date()).getTime();
-    for(var i = 0;i < 1000;i++) {
-        funcname();
+var g = Ytak(tmp1,tmp2,tmp3);
+ while(!tmp4) {
+        try {
+            tmp4 = g.next();
+            yield;
+        } catch(e) {       
+        }
     }
-    var end = (new Date()).getTime();
-    console.log(parseFloat(exectime/1000).toFixed(4));
+yield tmp4;
+yield END;
+}
+
+var j = 0;
+var END = 999;
+function Ymain() {
+console.time("a");
+var g = Ytak(9,6,3);
+var ans;
+ while(!ans) {
+        try {
+            ans = g.next();
+        } catch(e) {
+            break;
+        }
+    }
+console.timeEnd("a");
+}
+
+function main() {
+console.time("a");
+
+var ans = tak(24,16,8);
+
+console.timeEnd("a");
+
+document.body.innerHTML =  "  " + j;
+j = 0;
+
 }
 
 
-averagetime(oldPro);
-averagetime(generatorPro);
+function cpstak(x, y, z) {
+function trampoline(fun) {
+try {
+while (true) {
+fun = fun();
+}
+} catch (e) {
+return e;
+}
+}
+
+function tak(x, y, z, k) {
+if (! (y < x)) {
+return function () { return k(z)};
+} else {
+return function() {
+return tak(x - 1, y, z,
+function(v1) {
+return tak(y - 1, z, x,
+function(v2) {
+return tak(z - 1, x, y,
+function(v3) {
+return tak(v1, v2, v3, k);
+})
+})
+})};
+}
+}
+return trampoline(function() { return tak(x, y, z, function(x) {
+throw x; })});
+}
+
+function doIt() {
+var ans;
+ans = cpstak(18,12,6);
+return ans;
+}
+
+function Cmain(){
+console.time("a");
+try {
+cpstak(12,8,4, function(result){
+document.body.innerHTML += result;
+});
+}catch(e){
+alert(e);
+}
+console.timeEnd("a");
+}
+
+function test() {
+console.time("a");
+  for(var i = 0;i < 1;i++)
+    main();
+console.timeEnd("a");
+}
